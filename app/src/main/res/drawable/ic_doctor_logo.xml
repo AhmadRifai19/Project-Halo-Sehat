@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- background circle -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M54,54m-48,0a48,48 0,1 1,96 0a48,48 0,1 1,-96 0" />
+    <!-- medical cross vertical -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,34h16v52h-16z" />
+    <!-- medical cross horizontal -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M28,46h52v16h-52z" />
+    <!-- little rounded cut to make cross nicer - outer circle stroke -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M54,54m-44,0a44,44 0,1 1,88 0a44,44 0,1 1,-88 0" />
+</vector>

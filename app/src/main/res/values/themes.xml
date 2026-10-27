@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.AppsDokter" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/doctor_primary</item>
+        <item name="colorPrimaryVariant">@color/doctor_primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorBackground">@color/surface</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+    <style name="Theme.AppsDokter" parent="Base.Theme.AppsDokter" />
+    <!-- tema khusus splash - muncul pas app loading -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_doctor_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.AppsDokter</item>
+    </style>
+</resources>
