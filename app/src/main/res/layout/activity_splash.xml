@@ -1,73 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/masuk"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/splash_bg"
-    tools:context=".SplashActivity">
+    android:background="@color/bg_masuk">
 
-    <!-- logo dokter di tengah -->
+    <!-- 1. Logo Kesehatan -->
     <ImageView
-        android:id="@+id/logoSplash"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:src="@drawable/ic_doctor_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/iv_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintBottom_toTopOf="@+id/halo_sehat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42" />
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="16dp" />
 
-    <!-- nama aplikasi -->
+    <!-- 2. Judul: Halo Sehat -->
     <TextView
-        android:id="@+id/tvAppName"
+        android:id="@+id/halo_sehat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Apps Dokter"
-        android:textColor="@color/doctor_primary"
-        android:textSize="26sp"
-        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/halo_sehat"
+        android:textAppearance="@style/style_halo_sehat"
+        app:layout_constraintBottom_toTopOf="@+id/tv_layanan_kes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoSplash" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
-    <!-- tagline -->
+    <!-- 3. Subtitle: Layanan Kesehatan -->
     <TextView
-        android:id="@+id/tvTagline"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_layanan_kes"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Buat Janji Dokter Lebih Mudah"
-        android:textColor="@color/text_secondary"
-        android:textSize="13sp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:gravity="center"
+        android:text="@string/layanan_kes"
+        android:textAppearance="@style/style_layanan_kes"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
-
-    <!-- loading indicator di bawah -->
-    <ProgressBar
-        android:id="@+id/progressSplash"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="52dp"
-        android:indeterminateTint="@color/doctor_primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- versi kecil di bawah -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
-        android:text="v1.0"
-        android:textColor="#FF9EB0C5"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/halo_sehat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppsDokter">
 
-        <!-- Splash jadi launcher - tema khusus biar background langsung biru muda -->
+        <!-- Splash screen berbasis tema (Native SplashScreen API) -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.App.Starting"

@@ -4,31 +4,70 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
-// Splash screen - tampil 2.5 detik lalu pindah ke MainActivity
-// pakai SplashScreen API biar transisi mulus di Android 12+
 class SplashActivity : AppCompatActivity() {
 
-    private var keepSplash = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        // install splash bawaan Android 12+ dulu sebelum super.onCreate
-        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        // tahan splash system selama keepSplash = true
-        splashScreen.setKeepOnScreenCondition { keepSplash }
+        // Buat Full Screen agar navigasi HP hilang dan layout memenuhi layar
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
-        // tampilkan layout custom kita (logo + nama + loading)
         setContentView(R.layout.activity_splash)
 
-        // delay 2.5 detik lalu ke MainActivity
+        // Referensi View
+        val logo = findViewById<ImageView>(R.id.iv_logo)
+        val title = findViewById<TextView>(R.id.halo_sehat)
+        val desc = findViewById<TextView>(R.id.tv_layanan_kes)
+
+        // Animasi Fade-in dan Slide-up
+        logo?.let {
+            it.alpha = 0f
+            it.animate()
+                .alpha(1f)
+                .translationY(-20f)
+                .setDuration(1000)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .start()
+        }
+
+        title?.let {
+            it.alpha = 0f
+            it.animate()
+                .alpha(1f)
+                .translationY(-20f)
+                .setStartDelay(300)
+                .setDuration(1000)
+                .start()
+        }
+
+        desc?.let {
+            it.alpha = 0f
+            it.animate()
+                .alpha(1f)
+                .translationY(-20f)
+                .setStartDelay(600)
+                .setDuration(1000)
+                .start()
+        }
+
+        // Delay 2.5 detik lalu pindah ke MainActivity
         Handler(Looper.getMainLooper()).postDelayed({
-            keepSplash = false
-            startActivity(Intent(this, MainActivity::class.java))
-            finish() // tutup splash biar gak bisa back
+            try {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }, 2500)
     }
 }

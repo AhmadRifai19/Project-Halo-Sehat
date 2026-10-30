@@ -11,4 +11,5 @@
     <color name="text_primary">#FF1A2A3A</color>
     <color name="text_secondary">#FF6B7C93</color>
     <color name="surface">#FFFFFFFF</color>
+    <color name="bg_masuk">#F5F7FC</color>
 </resources>

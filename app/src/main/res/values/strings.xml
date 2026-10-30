@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Apps Dokter</string>
+    <string name="layanan_kes">Layanan Kesehatan Dalam Genggaman</string>
+    <string name="halo_sehat">Halo Sehat</string>
 </resources>
