@@ -12,10 +12,10 @@
     <style name="Theme.AppsDokter" parent="Base.Theme.AppsDokter" />
     
     <!-- Tema khusus Splash Screen agar Fullscreen dan NoActionBar -->
-    <style name="Theme.App.Starting" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">@color/bg_masuk</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
+    <style name="Theme.App.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+        <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="style_layanan_kes">
