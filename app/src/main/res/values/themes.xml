@@ -11,11 +11,13 @@
     </style>
     <style name="Theme.AppsDokter" parent="Base.Theme.AppsDokter" />
     
-    <!-- Tema khusus Splash Screen agar Fullscreen dan NoActionBar -->
-    <style name="Theme.App.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Tema khusus Splash Screen agar Fullscreen dan menyamarkan navigasi hitam -->
+    <style name="Theme.App.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/splash_background</item>
         <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="p">shortEdges</item>
     </style>
 
     <style name="style_layanan_kes">

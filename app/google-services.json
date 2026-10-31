@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "294011759181",
+    "project_id": "halo-sehat-eac52",
+    "storage_bucket": "halo-sehat-eac52.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294011759181:android:eb9489c39e0366253fca04",
+        "android_client_info": {
+          "package_name": "com.example.appsdokter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoNdLEtTGLuOaSl-Yww1pM3UefxoRWckM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
