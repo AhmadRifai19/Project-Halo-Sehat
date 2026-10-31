@@ -21,12 +21,15 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
+        // Memaksa konten menutupi area sistem (status bar & nav bar)
+        window.setDecorFitsSystemWindows(false)
+        
         setContentView(R.layout.activity_splash)
 
         // Referensi View
-        val logo = findViewById<ImageView>(R.id.iv_logo)
-        val title = findViewById<TextView>(R.id.halo_sehat)
-        val desc = findViewById<TextView>(R.id.tv_layanan_kes)
+        val logo = findViewById<ImageView>(R.id.imgLogo)
+        val title = findViewById<TextView>(R.id.tvTitle)
+        val desc = findViewById<TextView>(R.id.tvTagline)
 
         // Animasi Fade-in dan Slide-up
         logo?.let {
@@ -59,11 +62,13 @@ class SplashActivity : AppCompatActivity() {
                 .start()
         }
 
-        // Delay 2.5 detik lalu pindah ke MainActivity
+        // Delay 2.5 detik lalu pindah ke LoginActivity
         Handler(Looper.getMainLooper()).postDelayed({
             try {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+                // Memberikan transisi fade yang halus saat berpindah halaman
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             } catch (e: Exception) {
                 e.printStackTrace()

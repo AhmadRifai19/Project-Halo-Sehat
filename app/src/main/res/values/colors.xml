@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <!-- tema dokter - biru medis -->
-    <color name="doctor_primary">#FF1976D2</color>
-    <color name="doctor_primary_dark">#FF1565C0</color>
-    <color name="doctor_light">#FFEDF4FF</color>
-    <color name="doctor_accent">#FF42A5F5</color>
-    <color name="splash_bg">#FFEDF4FF</color>
-    <color name="text_primary">#FF1A2A3A</color>
-    <color name="text_secondary">#FF6B7C93</color>
-    <color name="surface">#FFFFFFFF</color>
+    <!-- Warna Splash Screen -->
+    <color name="splash_background">#F5F7FC</color>
+    <color name="splash_title">#182D44</color>
+    <color name="splash_tagline">#475569</color>
+
+    <!-- Warna Dasar Aplikasi -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    
+    <!-- Warna Tema Utama -->
+    <color name="doctor_primary">#2879C7</color>
+    <color name="doctor_primary_dark">#182D44</color>
+    <color name="surface">#FFFFFF</color>
+    
+    <!-- Warna Teks -->
+    <color name="text_primary">#182D44</color>
+    <color name="text_secondary">#475569</color>
+    
+    <!-- Warna Tambahan -->
     <color name="bg_masuk">#F5F7FC</color>
 </resources>
