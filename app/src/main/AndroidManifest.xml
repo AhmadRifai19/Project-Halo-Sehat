@@ -31,6 +31,18 @@
             android:name=".LoginActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".LupaPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".VerifikasiOtpActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".VerifikasiBerhasilActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
