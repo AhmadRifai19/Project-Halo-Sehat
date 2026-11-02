@@ -48,6 +48,14 @@ class LoginActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
+        val registrasi = findViewById<TextView>(R.id.tv_register)
+
+        // Navigasi ke Daftar
+        registrasi.setOnClickListener {
+            startActivity(android.content.Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
         // Memeriksa inisialisasi Firebase
         val firebaseApp = FirebaseApp.initializeApp(this)
 
