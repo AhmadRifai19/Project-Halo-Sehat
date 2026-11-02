@@ -32,6 +32,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".LupaPasswordActivity"
             android:exported="false" />
 
