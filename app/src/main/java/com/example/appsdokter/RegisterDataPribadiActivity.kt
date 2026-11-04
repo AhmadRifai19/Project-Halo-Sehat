@@ -10,7 +10,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar
-
+import android.content.Intent
+import android.widget.TextView
 class RegisterDataPribadiActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,15 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
         val etAlamat = findViewById<EditText>(R.id.etAlamat)
         val cbPersetujuan = findViewById<CheckBox>(R.id.cbPersetujuan)
         val btnDaftar = findViewById<Button>(R.id.btnDaftar)
+
+        val btnKembaliRegistrasi =
+            findViewById<TextView>(R.id.btnKembaliRegistrasi)
+
+        btnKembaliRegistrasi.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         // 2. Mengatur pilihan jenis kelamin
         val jenisKelamin = arrayOf(
@@ -77,6 +87,7 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
 
             datePicker.show()
         }
+
 
         // 4. Mengatur tombol Daftar
         btnDaftar.setOnClickListener {
