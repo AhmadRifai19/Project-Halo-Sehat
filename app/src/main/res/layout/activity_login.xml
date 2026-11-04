@@ -19,7 +19,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Header (Dibuang) -->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
@@ -36,7 +35,8 @@
                     android:layout_width="120dp"
                     android:layout_height="99dp"
                     android:src="@drawable/logo_halo_sehat"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Logo Halo Sehat" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -72,14 +72,14 @@
             <!-- Login Card -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_login_card"
                 android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="23dp">
 
-                <!-- Email -->
+                <!-- Email / No. HP -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,6 +126,7 @@
                         android:hint="Masukkan password"
                         android:inputType="textPassword"
                         android:paddingStart="16dp"
+                        android:paddingEnd="8dp"
                         android:textColor="#182D44"
                         android:textColorHint="#63758A"
                         android:textSize="14sp" />
@@ -152,6 +153,16 @@
                     android:text="Lupa Password?"
                     android:textColor="#2879C7"
                     android:textSize="13sp" />
+
+                <!-- Indikator Loading -->
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:indeterminateTint="#2879C7"
+                    android:visibility="gone" />
 
                 <!-- Login Button -->
                 <Button
@@ -208,4 +219,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>
