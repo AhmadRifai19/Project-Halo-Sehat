@@ -181,7 +181,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 // Lanjut ke tahap berikutnya (VerifikasiOtpActivity / Langkah 2)
                 // Membawa data uid, nama, dan email lewat Intent
-                val intent = Intent(this, VerifikasiOtpActivity::class.java).apply {
+                val intent = Intent(this, RegisterDataPribadiActivity::class.java).apply {
                     putExtra("EXTRA_UID", uid)
                     putExtra("EXTRA_NAMA", nama)
                     putExtra("EXTRA_EMAIL", email)
