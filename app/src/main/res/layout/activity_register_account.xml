@@ -215,6 +215,7 @@
                         android:background="@android:color/transparent"
                         android:hint="Buat password"
                         android:paddingStart="14dp"
+                        android:paddingEnd="8dp"
                         android:textColor="#182D44"
                         android:textColorHint="#63758A"
                         android:textSize="15sp"
@@ -244,6 +245,16 @@
                     android:lineSpacingMultiplier="1.5"/>
 
             </LinearLayout>
+
+            <!-- INDIKATOR LOADING -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:indeterminateTint="#2879C7"
+                android:visibility="gone" />
 
             <!-- TOMBOL LANJUTKAN -->
             <Button
