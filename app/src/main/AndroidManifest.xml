@@ -47,6 +47,10 @@
             android:name=".VerifikasiBerhasilActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".AiKonsulActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
