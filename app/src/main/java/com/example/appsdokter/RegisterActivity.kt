@@ -179,24 +179,16 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Pindah ke halaman Data Pribadi
-                val intent = Intent(
-                    this,
-                    RegisterDataPribadiActivity::class.java
-                ).apply {
+                // Lanjut ke tahap berikutnya (VerifikasiOtpActivity / Langkah 2)
+                // Membawa data uid, nama, dan email lewat Intent
+                val intent = Intent(this, VerifikasiOtpActivity::class.java).apply {
                     putExtra("EXTRA_UID", uid)
                     putExtra("EXTRA_NAMA", nama)
                     putExtra("EXTRA_EMAIL", email)
                 }
-
                 startActivity(intent)
-
                 @Suppress("DEPRECATION")
-                overridePendingTransition(
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out
-                )
-
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
             .addOnFailureListener { error ->
