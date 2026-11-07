@@ -68,13 +68,13 @@ class LoginActivity : AppCompatActivity() {
         // 4. Navigasi ke Lupa Password
         tvForgotPassword.setOnClickListener {
             startActivity(Intent(this, LupaPasswordActivity::class.java))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         // 5. Navigasi ke Daftar (RegisterActivity)
         tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         // 6. Aksi Tombol Masuk (Login dengan Firebase Auth & RTDB)

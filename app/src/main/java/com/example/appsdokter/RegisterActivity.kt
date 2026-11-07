@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.et_password)
         val btnEye = findViewById<ImageView>(R.id.btn_eye)
         val btnLanjutkan = findViewById<Button>(R.id.btn_lanjutkan)
-        val tvBackLogin = findViewById<TextView>(R.id.tv_back_login)
+        val btnBackLogin = findViewById<ImageView>(R.id.btn_back_login)
         val tvMasuk = findViewById<TextView>(R.id.tv_masuk)
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
 
@@ -101,7 +101,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         // 5. Navigasi Kembali ke Login
-        tvBackLogin?.setOnClickListener {
+        btnBackLogin.setOnClickListener {
             navigateBackToLogin()
         }
 
@@ -187,8 +187,7 @@ class RegisterActivity : AppCompatActivity() {
                     putExtra("EXTRA_EMAIL", email)
                 }
                 startActivity(intent)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
             }
             .addOnFailureListener { error ->
@@ -210,7 +209,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun navigateBackToLogin() {
         finish()
-        @Suppress("DEPRECATION")
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

@@ -17,13 +17,13 @@ class VerifikasiBerhasilActivity : AppCompatActivity() {
             // Membersihkan backstack agar user tidak bisa kembali ke halaman sukses
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             finish()
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }
