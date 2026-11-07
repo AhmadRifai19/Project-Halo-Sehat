@@ -142,14 +142,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:foregroundGravity="center">
-
-        <View
-            android:layout_width="134dp"
-            android:layout_height="5dp"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_home_indicator" />
-
-    </FrameLayout>
+        android:foregroundGravity="center"/>
 
 </LinearLayout>

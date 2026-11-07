@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Halo Sehat</string>
-    <string name="splash_tagline">Layanan Kesehatan Dalam Genggaman</string>
+    <string name="app_name">AppsDokter</string>
+    <string name="time_placeholder">9.41</string>
+    <string name="app_name_text">Halo Sehat</string>
+    <string name="app_slogan">Layanan Kesehatan Dalam Genggaman</string>
+    <string name="account_created_title">Akun Berhasil Dibuat</string>
+    <string name="account_created_desc">Akun berhasil dibuat. Silakan masuk untuk menggunakan Halo Sehat.</string>
+    <string name="btn_home_text">Ke Beranda</string>
+    <string name="logo_halo_sehat_desc">Logo Halo Sehat</string>
 </resources>

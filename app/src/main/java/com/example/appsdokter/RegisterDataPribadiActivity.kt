@@ -1,18 +1,19 @@
 package com.example.appsdokter
 
 import android.app.DatePickerDialog
-import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import java.util.Calendar
 import android.content.Intent
-import android.widget.TextView
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.util.Locale
+import java.util.Calendar
+
 class RegisterDataPribadiActivity : AppCompatActivity() {
+
+    private val auth = FirebaseAuth.getInstance()
+    private val dbRef = FirebaseDatabase.getInstance().getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,13 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
         val cbPersetujuan = findViewById<CheckBox>(R.id.cbPersetujuan)
         val btnDaftar = findViewById<Button>(R.id.btnDaftar)
 
-        val btnKembaliRegistrasi =
-            findViewById<TextView>(R.id.btnKembaliRegistrasi)
+        // Terima data dari intent
+        val emailFromIntent = intent.getStringExtra("email") ?: ""
+        val passwordFromIntent = intent.getStringExtra("password") ?: ""
+        val namaFromIntent = intent.getStringExtra("nama") ?: ""
+        val noHpFromIntent = intent.getStringExtra("no_hp") ?: ""
+
+        val btnKembaliRegistrasi = findViewById<TextView>(R.id.btnKembaliRegistrasi)
 
         btnKembaliRegistrasi.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
@@ -69,6 +75,7 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
                 { _, year, month, dayOfMonth ->
 
                     val tanggalFormat = String.format(
+                        Locale.getDefault(),
                         "%02d/%02d/%04d",
                         dayOfMonth,
                         month + 1,
@@ -150,11 +157,36 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
             }
 
             // Jika semua data sudah benar
-            Toast.makeText(
-                this,
-                "Pendaftaran berhasil!",
-                Toast.LENGTH_LONG
-            ).show()
+            auth.createUserWithEmailAndPassword(emailFromIntent, passwordFromIntent)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val userId = auth.currentUser?.uid
+                        val userMap = mapOf(
+                            "nik" to nik,
+                            "tempat_lahir" to tempatLahir,
+                            "tanggal_lahir" to tanggalLahir,
+                            "jenis_kelamin" to spJenisKelamin.selectedItem.toString(),
+                            "alamat" to alamat,
+                            "nama" to namaFromIntent,
+                            "no_hp" to noHpFromIntent
+                        )
+
+                        userId?.let {
+                            dbRef.child(it).setValue(userMap).addOnCompleteListener { dbTask ->
+                                if (dbTask.isSuccessful) {
+                                    val intent = Intent(this, RegisterSuccessActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    Toast.makeText(this, "Gagal simpan database: ${dbTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this, "Gagal Daftar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 }

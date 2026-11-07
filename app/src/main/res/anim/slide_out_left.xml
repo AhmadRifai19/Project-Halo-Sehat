@@ -3,11 +3,11 @@
     android:shareInterpolator="false">
     <translate
         android:fromXDelta="0%"
-        android:toXDelta="-20%"
-        android:duration="300"
-        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+        android:toXDelta="-25%"
+        android:duration="400"
+        android:interpolator="@android:anim/decelerate_interpolator"/>
     <alpha
         android:fromAlpha="1.0"
-        android:toAlpha="0.0"
-        android:duration="300"/>
+        android:toAlpha="0.6"
+        android:duration="400"/>
 </set>

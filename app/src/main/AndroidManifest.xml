@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -36,6 +35,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".RegisterDataPribadiActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RegisterSuccessActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".LupaPasswordActivity"
             android:exported="false" />
 
@@ -48,11 +55,11 @@
             android:exported="false" />
 
         <activity
-            android:name=".AiKonsulActivity"
+            android:name=".NewPasswordActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RegisterDataPribadiActivity"
+            android:name=".AiKonsulActivity"
             android:exported="false" />
 
         <activity
