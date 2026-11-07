@@ -62,6 +62,11 @@
             android:name=".AiKonsulActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".NotifikasiActivity"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
