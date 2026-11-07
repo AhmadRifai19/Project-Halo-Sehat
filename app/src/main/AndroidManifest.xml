@@ -55,6 +55,11 @@
             android:name=".RegisterDataPribadiActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".NotifikasiActivity"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
