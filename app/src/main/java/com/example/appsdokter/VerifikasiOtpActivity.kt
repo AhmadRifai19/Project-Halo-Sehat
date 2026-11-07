@@ -11,28 +11,64 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.addCallback
 
 class VerifikasiOtpActivity : AppCompatActivity() {
+
+    private var receivedUid: String? = null
+    private var receivedNama: String? = null
+    private var receivedEmail: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verifikasi_otp)
 
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right) // sesuaikan dengan exit anim Anda
+        }
+
+        // Menerima data dari Intent RegisterActivity
+        receivedUid = intent.getStringExtra("EXTRA_UID")
+        receivedNama = intent.getStringExtra("EXTRA_NAMA")
+        receivedEmail = intent.getStringExtra("EXTRA_EMAIL")
+
         val btnKembali = findViewById<LinearLayout>(R.id.btnKembali)
         val tvKembaliLupaPassword = findViewById<TextView>(R.id.tvKembaliLupaPassword)
         val btnVerifikasi = findViewById<Button>(R.id.btnVerifikasi)
 
-        btnKembali.setOnClickListener {
+        btnKembali?.setOnClickListener {
             finishWithAnimation()
         }
 
-        tvKembaliLupaPassword.setOnClickListener {
+        tvKembaliLupaPassword?.setOnClickListener {
             finishWithAnimation()
         }
 
-        btnVerifikasi.setOnClickListener {
-            startActivity(Intent(this, VerifikasiBerhasilActivity::class.java))
+        btnVerifikasi?.setOnClickListener {
+            // Validasi kode OTP (simulasi sederhana: pastikan terisi 6 digit)
+            val otp1 = findViewById<EditText>(R.id.otp1).text.toString()
+            val otp2 = findViewById<EditText>(R.id.otp2).text.toString()
+            val otp3 = findViewById<EditText>(R.id.otp3).text.toString()
+            val otp4 = findViewById<EditText>(R.id.otp4).text.toString()
+            val otp5 = findViewById<EditText>(R.id.otp5).text.toString()
+            val otp6 = findViewById<EditText>(R.id.otp6).text.toString()
+
+            val completeOtp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6
+
+            if (completeOtp.length < 6) {
+                Toast.makeText(this, "Masukkan 6 digit kode OTP secara lengkap", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Jika OTP valid (simulasi sukses), arahkan ke halaman sukses / lengkapi data berikutnya
+            val intent = Intent(this, VerifikasiBerhasilActivity::class.java).apply {
+                putExtra("EXTRA_UID", receivedUid)
+            }
+            startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             finish()
         }
@@ -52,6 +88,7 @@ class VerifikasiOtpActivity : AppCompatActivity() {
 
         for (i in otpBoxes.indices) {
             val currentBox = otpBoxes[i]
+            // Perbaikan syntax error pada indeks array berikutnya
             val nextBox = if (i < otpBoxes.size - 1) otpBoxes[i + 1] else null
             val prevBox = if (i > 0) otpBoxes[i - 1] else null
 
@@ -87,11 +124,6 @@ class VerifikasiOtpActivity : AppCompatActivity() {
 
     private fun finishWithAnimation() {
         finish()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

@@ -51,6 +51,10 @@
             android:name=".AiKonsulActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".RegisterDataPribadiActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

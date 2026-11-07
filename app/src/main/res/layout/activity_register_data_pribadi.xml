@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp"
+            android:background="#2879C7">
+
+            <!-- Status bar placeholder.
+                 Bisa dihapus jika memakai status bar Android asli. -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="9.41"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="●  Wi-Fi  ▰"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <!-- Tombol kembali -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnKembaliRegistrasi"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="‹"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Data akun"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Judul -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Data Pribadi"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Lengkapi data sesuai identitas Anda."
+                android:textColor="#DFEDFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Langkah 2 dari 2 · Data akun ✓ → Data pribadi"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- KONTEN -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="20dp">
+
+            <!-- FORM CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:background="@drawable/bg_form_card">
+
+                <!-- NIK -->
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="NIK (16 digit)" />
+
+                <EditText
+                    android:id="@+id/etNik"
+                    style="@style/FormInput"
+                    android:hint="Masukkan 16 digit NIK"
+                    android:inputType="number"
+                    android:maxLength="16" />
+
+                <!-- TEMPAT LAHIR -->
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="Tempat Lahir" />
+
+                <EditText
+                    android:id="@+id/etTempatLahir"
+                    style="@style/FormInput"
+                    android:hint="Masukkan tempat lahir"
+                    android:inputType="textCapWords" />
+
+                <!-- TANGGAL LAHIR -->
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="Tanggal Lahir" />
+
+                <EditText
+                    android:id="@+id/etTanggalLahir"
+                    style="@style/FormInput"
+                    android:hint="DD/MM/YYYY"
+                    android:focusable="false"
+                    android:clickable="true" />
+
+                <!-- JENIS KELAMIN -->
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="Jenis kelamin" />
+
+                <Spinner
+                    android:id="@+id/spJenisKelamin"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/bg_form_input" />
+
+                <!-- ALAMAT -->
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="Alamat sesuai identitas" />
+
+                <EditText
+                    android:id="@+id/etAlamat"
+                    style="@style/FormInput"
+                    android:hint="Masukkan alamat lengkap"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|start"
+                    android:minLines="2"
+                    android:paddingTop="14dp" />
+
+            </LinearLayout>
+
+            <!-- PERSETUJUAN -->
+            <CheckBox
+                android:id="@+id/cbPersetujuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:buttonTint="#2879C7"
+                android:text="Saya menyetujui Syarat dan Ketentuan serta telah membaca Kebijakan Privasi."
+                android:textColor="#63758A"
+                android:textSize="12sp"
+                android:lineSpacingExtra="2dp" />
+
+            <!-- TOMBOL DAFTAR -->
+            <Button
+                android:id="@+id/btnDaftar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_button_daftar"
+                android:elevation="4dp"
+                android:text="Daftar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
