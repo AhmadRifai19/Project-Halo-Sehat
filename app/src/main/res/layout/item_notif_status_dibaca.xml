@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:text="Kategori"
+        android:textColor="#2879C7"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_notif_semua_category" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:text="✓  Dibaca"
+        android:textColor="#2879C7"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_notif_semua_status" />
+</LinearLayout>
