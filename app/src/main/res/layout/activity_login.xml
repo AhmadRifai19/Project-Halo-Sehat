@@ -34,7 +34,7 @@
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="99dp"
-                    android:contentDescription="Logo Halo Sehat"
+                    android:contentDescription="@string/txt_logo_halo_sehat"
                     android:scaleType="fitCenter"
                     android:src="@drawable/logo_halo_sehat" />
 
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="Halo Sehat"
+                    android:text="@string/txt_halo_sehat"
                     android:textColor="#182D44"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Selamat Datang Kembali"
+                    android:text="@string/txt_selamat_datang"
                     android:textColor="#182D44"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Masuk untuk mengakses layanan kesehatan Anda."
+                    android:text="@string/txt_akses_layanan"
                     android:textColor="#63758A"
                     android:textSize="14sp" />
 
@@ -83,7 +83,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email / No. HP"
+                    android:text="@string/txt_email_hp"
                     android:textColor="#182D44"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -93,8 +93,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
+                    android:autofillHints="emailAddress"
                     android:background="@drawable/bg_input"
-                    android:hint="Masukkan email atau nomor HP"
+                    android:hint="@string/txt_hint_email_hp"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="14dp"
                     android:textColor="#182D44"
@@ -106,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Password"
+                    android:text="@string/txt_password"
                     android:textColor="#182D44"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -122,8 +123,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toStartOf="@id/btn_eye"
+                        android:autofillHints="password"
                         android:background="@android:color/transparent"
-                        android:hint="Masukkan password"
+                        android:hint="@string/txt_hint_password"
                         android:inputType="textPassword"
                         android:paddingStart="16dp"
                         android:paddingEnd="8dp"
@@ -138,7 +140,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="16dp"
-                        android:contentDescription="Lihat password"
+                        android:contentDescription="@string/txt_lihat_password"
                         android:src="@drawable/ic_eye" />
 
                 </RelativeLayout>
@@ -150,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="16dp"
-                    android:text="Lupa Password?"
+                    android:text="@string/txt_lupa_password"
                     android:textColor="#2879C7"
                     android:textSize="13sp" />
 
@@ -171,11 +173,26 @@
                     android:layout_height="52dp"
                     android:layout_marginTop="16dp"
                     android:backgroundTint="#2879C7"
-                    android:text="Masuk"
+                    android:text="@string/txt_masuk"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
+                <!-- Google Login Button -->
+                <Button
+                    android:id="@+id/btn_google_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:text="@string/txt_google_masuk"
+                    android:textAllCaps="false"
+                    android:textColor="#63758A"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:strokeColor="#63758A"
+                    app:strokeWidth="1dp" />
 
                 <!-- Register -->
                 <LinearLayout
@@ -188,7 +205,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Belum punya akun? "
+                        android:text="@string/txt_belum_punya_akun"
                         android:textColor="#63758A"
                         android:textSize="13sp" />
 
@@ -196,7 +213,7 @@
                         android:id="@+id/tv_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Daftar"
+                        android:text="@string/txt_daftar"
                         android:textColor="#2879C7"
                         android:textSize="13sp"
                         android:textStyle="bold" />

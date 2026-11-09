@@ -1,11 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AppsDokter</string>
     <string name="time_placeholder">9.41</string>
     <string name="app_name_text">Halo Sehat</string>
     <string name="app_slogan">Layanan Kesehatan Dalam Genggaman</string>
-    <string name="account_created_title">Akun Berhasil Dibuat</string>
-    <string name="account_created_desc">Akun berhasil dibuat. Silakan masuk untuk menggunakan Halo Sehat.</string>
-    <string name="btn_home_text">Ke Beranda</string>
+    <string name="account_created_title">Aktivasi Akun Anda</string>
+    <string name="account_created_desc">Link aktivasi telah dikirim ke email Anda. Silakan klik link tersebut untuk mengaktifkan akun sebelum masuk.</string>
+    <string name="btn_home_text">Kembali ke Login</string>
     <string name="logo_halo_sehat_desc">Logo Halo Sehat</string>
     <string name="splash_tagline">Solusi Kesehatan Terpercaya Anda</string>
+    <string name="default_web_client_id">45209778275-k9758k8r7c1n6r6k6688h2i3j4j2u4e3.apps.googleusercontent.com</string>
+    <string name="btn_kirim_link_reset">Kirim Link Reset</string>
+    <string name="title_lupa_password">Lupa Password?</string>
+    <string name="desc_lupa_password">Masukkan email terdaftar untuk menerima link reset password.</string>
+    <string name="logo_halo_sehat">Logo Halo Sehat</string>
+    <string name="header_pemulihan">Pemulihan Password</string>
+    <string name="desc_kontak_pemulihan">Gunakan kontak yang terhubung ke akun Anda.</string>
+    <string name="hint_email_hp">Email / No. HP terdaftar</string>
+    <string name="hint_input_email_hp">Email atau nomor HP</string>
+    <string name="desc_link_reset">Link reset password akan dikirim ke email terdaftar.</string>
+    <string name="footer_kembali_login">Sudah ingat password? Kembali ke Login</string>
+    <string name="txt_belum_punya_akun">Belum punya akun? </string>
+    <string name="txt_selamat_datang">Selamat Datang Kembali</string>
+    <string name="txt_akses_layanan">Masuk untuk mengakses layanan kesehatan Anda.</string>
+    <string name="txt_email_hp">Email / No. HP</string>
+    <string name="txt_hint_email_hp">Masukkan email atau nomor HP</string>
+    <string name="txt_password">Password</string>
+    <string name="txt_hint_password">Masukkan password</string>
+    <string name="txt_lihat_password">Lihat password</string>
+    <string name="txt_lupa_password">Lupa Password?</string>
+    <string name="txt_masuk">Masuk</string>
+    <string name="txt_google_masuk">Masuk dengan Google</string>
+    <string name="txt_daftar">Daftar</string>
+    <string name="txt_logo_halo_sehat">Logo Halo Sehat</string>
+    <string name="txt_halo_sehat">Halo Sehat</string>
 </resources>

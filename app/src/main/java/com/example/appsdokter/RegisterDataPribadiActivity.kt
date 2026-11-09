@@ -168,16 +168,26 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
                             "jenis_kelamin" to spJenisKelamin.selectedItem.toString(),
                             "alamat" to alamat,
                             "nama" to namaFromIntent,
-                            "no_hp" to noHpFromIntent
+                            "no_hp" to noHpFromIntent,
+                            "email" to emailFromIntent,
+                            "status_aktif" to false
                         )
 
                         userId?.let {
                             dbRef.child(it).setValue(userMap).addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
-                                    val intent = Intent(this, RegisterSuccessActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    startActivity(intent)
-                                    finish()
+                                    // KIRIM EMAIL VERIFIKASI (AKTIVASI)
+                                    auth.currentUser?.sendEmailVerification()
+                                        ?.addOnCompleteListener { verifyTask ->
+                                            if (verifyTask.isSuccessful) {
+                                                val intent = Intent(this, RegisterSuccessActivity::class.java)
+                                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                startActivity(intent)
+                                                finish()
+                                            } else {
+                                                Toast.makeText(this, "Gagal mengirim email aktivasi.", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
                                 } else {
                                     Toast.makeText(this, "Gagal simpan database: ${dbTask.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }

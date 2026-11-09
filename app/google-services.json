@@ -13,7 +13,20 @@
           "package_name": "com.example.appsdokter"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "294011759181-3f7n07uhnk9js2dc15eo1ttde93ir5lb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appsdokter",
+            "certificate_hash": "50afe681c1901c5fbeec4fc7c824d0d7e9156eb0"
+          }
+        },
+        {
+          "client_id": "294011759181-0remcf89endf9motdru4a2eebras7nmk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCoNdLEtTGLuOaSl-Yww1pM3UefxoRWckM"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294011759181-0remcf89endf9motdru4a2eebras7nmk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
