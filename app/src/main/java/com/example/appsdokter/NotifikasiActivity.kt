@@ -1,8 +1,9 @@
+
 package com.example.appsdokter
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 
 class NotifikasiActivity : AppCompatActivity() {
@@ -14,11 +15,11 @@ class NotifikasiActivity : AppCompatActivity() {
         val tombol = findViewById<Button>(R.id.btn_tandai_dibaca)
 
         tombol.setOnClickListener {
-            Toast.makeText(
+            val intent = Intent(
                 this,
-                "Semua notifikasi sudah dibaca",
-                Toast.LENGTH_SHORT
-            ).show()
+                NotifikasiSemuaActivity::class.java
+            )
+            startActivity(intent)
         }
     }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="82dp"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_notif_semua_card">
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="3dp"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        android:scaleType="fitCenter"
+        android:background="@drawable/bg_notif_semua_icon"
+        android:contentDescription="Ikon jadwal" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="Jadwal"
+                android:textColor="#2879C7"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_notif_semua_category" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="✓  Dibaca"
+                android:textColor="#2879C7"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_notif_semua_status" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Jadwal Kontrol"
+            android:textColor="#182D44"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Jadwal kontrol: 26 Mei 2026 pukul 09.00 WIB."
+            android:textColor="#495C72"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -64,7 +64,12 @@
 
         <activity
             android:name=".NotifikasiActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".NotifikasiSemuaActivity"
             android:exported="false" />
+
 
 
     </application>
