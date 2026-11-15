@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appsdokter.BuildConfig
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -21,11 +22,8 @@ class AiConversationActivity : AppCompatActivity() {
     private val attachmentList = mutableListOf<Uri>()
     private lateinit var adapter: AttachmentAdapter
     
-    // Daftar API Key Gemini (Bisa ditambah lebih dari satu)
-    private val aiService = AiChatService(this, listOf(
-        "",
-        ""
-    ))
+    // Daftar API Key Gemini (Diambil dari local.properties via BuildConfig)
+    private val aiService = AiChatService(this, BuildConfig.GEMINI_API_KEY.split(","))
     private val chatHistory = mutableListOf<ChatMessage>()
     private val profileNotes = mutableListOf<String>()
 
@@ -59,23 +57,22 @@ class AiConversationActivity : AppCompatActivity() {
             
             if (uid != null) {
                 try {
-                    // Load Profile
-                    var snapshot = FirebaseDatabase.getInstance().getReference(uid).get().await()
+                    // Cek path 1: users/UID
+                    var snapshot = FirebaseDatabase.getInstance().getReference("users").child(uid).get().await()
+                    
+                    // Cek path 2: root/UID (jika path 1 gagal)
+                    if (!snapshot.exists()) {
+                        snapshot = FirebaseDatabase.getInstance().getReference(uid).get().await()
+                    }
+                    
                     if (snapshot.exists()) {
                         val nama = snapshot.child("nama").getValue(String::class.java) ?: "User"
                         val alergi = snapshot.child("riwayat_alergi").getValue(String::class.java) ?: "Tidak ada"
                         val kondisi = snapshot.child("kondisi_medis").getValue(String::class.java) ?: "Sehat"
                         userProfileData = "Nama: $nama\nRiwayat Alergi: $alergi\nKondisi Medis: $kondisi"
-                        android.util.Log.d("AiConversation", "Profil Loaded: $userProfileData")
+                        android.util.Log.d("AiConversation", "Profil Ditemukan! Data: $userProfileData")
                     } else {
-                        snapshot = FirebaseDatabase.getInstance().getReference("users").child(uid).get().await()
-                        if (snapshot.exists()) {
-                            val nama = snapshot.child("nama").getValue(String::class.java) ?: "User"
-                            val alergi = snapshot.child("riwayat_alergi").getValue(String::class.java) ?: "Tidak ada"
-                            val kondisi = snapshot.child("kondisi_medis").getValue(String::class.java) ?: "Sehat"
-                            userProfileData = "Nama: $nama\nRiwayat Alergi: $alergi\nKondisi Medis: $kondisi"
-                            android.util.Log.d("AiConversation", "Profil Loaded dari users/: $userProfileData")
-                        }
+                        android.util.Log.e("AiConversation", "GAGAL: Data tidak ditemukan di path users/UID atau UID!")
                     }
                     
                     // Load Summary
