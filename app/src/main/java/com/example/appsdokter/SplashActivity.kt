@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
@@ -64,17 +65,20 @@ class SplashActivity : AppCompatActivity() {
                 .start()
         }
 
-        // Delay 2.5 detik lalu pindah ke LoginActivity
+        // Delay 2.5 detik lalu cek sesi user
         Handler(Looper.getMainLooper()).postDelayed({
-            try {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                // Memberikan transisi fade yang halus saat berpindah halaman
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                finish()
-            } catch (e: Exception) {
-                e.printStackTrace()
+            val auth = FirebaseAuth.getInstance()
+            val user = auth.currentUser
+
+            if (user != null && user.isEmailVerified) {
+                // Sesi valid, langsung ke Main
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                // Harus login
+                startActivity(Intent(this, LoginActivity::class.java))
             }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
         }, 2500)
     }
 }

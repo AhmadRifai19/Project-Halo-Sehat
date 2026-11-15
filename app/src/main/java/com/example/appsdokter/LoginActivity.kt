@@ -13,9 +13,15 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -27,23 +33,22 @@ class LoginActivity : AppCompatActivity() {
     private var isPasswordVisible = false
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // 1. Inisialisasi FirebaseApp, Auth, dan Realtime Database
         FirebaseApp.initializeApp(this)
         auth = FirebaseAuth.getInstance()
+        dbRef = FirebaseDatabase.getInstance().reference
 
-        // Menggunakan instance default RTDB (otomatis membaca URL dari google-services.json)
-        val database = FirebaseDatabase.getInstance()
-        dbRef = database.reference
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Tes koneksi ke Realtime Database
-        testRtdbConnection()
-
-        // 2. Inisialisasi Komponen UI sesuai ID pada activity_login.xml
         val etEmailOrPhone = findViewById<EditText>(R.id.et_email)
         val etPassword = findViewById<EditText>(R.id.et_password)
         val btnEye = findViewById<ImageView>(R.id.btn_eye)
@@ -51,8 +56,10 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btn_login)
         val tvRegister = findViewById<TextView>(R.id.tv_register)
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+        val btnGoogleLogin = findViewById<Button>(R.id.btn_google_login)
 
-        // 3. Fungsi Show/Hide Password
+        btnGoogleLogin.setOnClickListener { signInGoogle() }
+
         btnEye.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
@@ -65,24 +72,20 @@ class LoginActivity : AppCompatActivity() {
             etPassword.setSelection(etPassword.text.length)
         }
 
-        // 4. Navigasi ke Lupa Password
         tvForgotPassword.setOnClickListener {
             startActivity(Intent(this, LupaPasswordActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
-        // 5. Navigasi ke Daftar (RegisterActivity)
         tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
-        // 6. Aksi Tombol Masuk (Login dengan Firebase Auth & RTDB)
         btnLogin.setOnClickListener {
             val identifier = etEmailOrPhone.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
-            // Validasi input kosong
             if (identifier.isEmpty()) {
                 etEmailOrPhone.error = "Email atau Nomor HP wajib diisi"
                 etEmailOrPhone.requestFocus()
@@ -97,140 +100,111 @@ class LoginActivity : AppCompatActivity() {
 
             setLoadingState(true, btnLogin, progressBar)
 
-            // Cek apakah input berupa Email atau Nomor HP
             if (Patterns.EMAIL_ADDRESS.matcher(identifier).matches()) {
-                // Jika formatnya Email, langsung proses ke Firebase Auth
                 signInWithEmail(identifier, password, btnLogin, progressBar)
             } else {
-                // Jika formatnya Nomor HP, cari email pengguna di node "users" RTDB terlebih dahulu
                 loginWithPhoneNumber(identifier, password, btnLogin, progressBar)
             }
         }
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        // Jika user sebelumnya sudah login, langsung arahkan ke MainActivity
-//        if (auth.currentUser != null) {
-//            navigateToMain()
-//        }
-//    }
-
-    private fun testRtdbConnection() {
-        val testData = mapOf(
-            "nama" to "Halo Sehat",
-            "status" to "Berhasil terhubung ke Realtime Database",
-            "timestamp" to System.currentTimeMillis()
-        )
-        dbRef.child("connection_test").child("test_android").setValue(testData)
-            .addOnSuccessListener {
-                Log.d("FIREBASE_TEST", "Data percobaan berhasil dikirim ke Realtime Database!")
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google Sign-In Gagal: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { error ->
-                Log.e("FIREBASE_TEST", "Gagal mengirim data ke RTDB: ${error.message}")
+        }
+    }
+
+    private fun signInGoogle() {
+        val signInIntent = googleSignInClient.signInIntent
+        googleSignInLauncher.launch(signInIntent)
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val uid = user?.uid ?: return@addOnCompleteListener
+                    
+                    val userData = mapOf(
+                        "nama" to (user.displayName ?: ""),
+                        "email" to (user.email ?: ""),
+                        "status_aktif" to true
+                    )
+                    
+                    dbRef.child("users").child(uid).updateChildren(userData)
+                    
+                    Toast.makeText(this, "Selamat datang, ${user.displayName}", Toast.LENGTH_SHORT).show()
+                    navigateToMain()
+                } else {
+                    Toast.makeText(this, "Google Login Gagal: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
             }
     }
 
-    private fun loginWithPhoneNumber(
-        phoneInput: String,
-        password: String,
-        btnLogin: Button,
-        progressBar: ProgressBar
-    ) {
-        val normalizedPhone = normalizePhone(phoneInput)
-
-        // Mencari data user berdasarkan field "no_hp" di Realtime Database
-        dbRef.child("users")
-            .orderByChild("no_hp")
-            .equalTo(normalizedPhone)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        var foundEmail: String? = null
-                        for (userSnap in snapshot.children) {
-                            foundEmail = userSnap.child("email").getValue(String::class.java)
-                            if (!foundEmail.isNullOrEmpty()) break
-                        }
-
-                        if (!foundEmail.isNullOrEmpty()) {
-                            signInWithEmail(foundEmail, password, btnLogin, progressBar)
-                        } else {
-                            setLoadingState(false, btnLogin, progressBar)
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Email untuk nomor HP ini tidak ditemukan di database.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else {
-                        setLoadingState(false, btnLogin, progressBar)
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Nomor HP belum terdaftar. Silakan daftar akun terlebih dahulu.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    setLoadingState(false, btnLogin, progressBar)
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Gagal memeriksa nomor HP: ${error.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-    }
-
-    private fun signInWithEmail(
-        email: String,
-        password: String,
-        btnLogin: Button,
-        progressBar: ProgressBar
-    ) {
+    private fun signInWithEmail(email: String, password: String, btnLogin: Button, progressBar: ProgressBar) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val uid = auth.currentUser?.uid
-                    if (uid != null) {
-                        fetchUserDataFromRtdb(uid, btnLogin, progressBar)
-                    } else {
-                        setLoadingState(false, btnLogin, progressBar)
-                        navigateToMain()
+                    val user = auth.currentUser
+                    if (user != null) {
+                        user.reload().addOnCompleteListener { _ ->
+                            val isVerified = user.isEmailVerified
+                            if (isVerified) {
+                                dbRef.child("users").child(user.uid).child("status_aktif").setValue(true)
+                                    .addOnSuccessListener { fetchUserDataFromRtdb(user.uid, true, btnLogin, progressBar) }
+                                    .addOnFailureListener { fetchUserDataFromRtdb(user.uid, true, btnLogin, progressBar) }
+                            } else {
+                                fetchUserDataFromRtdb(user.uid, false, btnLogin, progressBar)
+                            }
+                        }
                     }
                 } else {
                     setLoadingState(false, btnLogin, progressBar)
-                    Toast.makeText(
-                        this,
-                        "Login gagal: Email/Password salah atau akun belum terdaftar.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this, "Login gagal: Email/Password salah.", Toast.LENGTH_LONG).show()
                 }
             }
     }
 
-    private fun fetchUserDataFromRtdb(uid: String, btnLogin: Button, progressBar: ProgressBar) {
-        val userRef = dbRef.child("users").child(uid)
-
-        // Perbarui waktu terakhir login
-        userRef.child("last_login").setValue(System.currentTimeMillis())
-
-        // Ambil nama pengguna dari Realtime Database untuk sapaan
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+    private fun fetchUserDataFromRtdb(uid: String, isVerifiedInAuth: Boolean, btnLogin: Button, progressBar: ProgressBar) {
+        dbRef.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 setLoadingState(false, btnLogin, progressBar)
-                val nama = snapshot.child("nama").getValue(String::class.java) ?: "Pengguna"
-                Toast.makeText(this@LoginActivity, "Selamat datang, $nama!", Toast.LENGTH_SHORT).show()
-                navigateToMain()
+                val isActiveInDb = snapshot.child("status_aktif").getValue(Boolean::class.java) ?: false
+                if (isVerifiedInAuth || isActiveInDb) {
+                    if (isVerifiedInAuth && !isActiveInDb) dbRef.child("users").child(uid).child("status_aktif").setValue(true)
+                    navigateToMain()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Akun belum aktif. Cek email Anda.", Toast.LENGTH_LONG).show()
+                    auth.signOut()
+                }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                setLoadingState(false, btnLogin, progressBar)
-                Log.w("FIREBASE_RTDB", "Gagal memuat profil: ${error.message}")
-                navigateToMain()
-            }
+            override fun onCancelled(error: DatabaseError) { setLoadingState(false, btnLogin, progressBar); auth.signOut() }
         })
+    }
+
+    private fun loginWithPhoneNumber(phoneInput: String, password: String, btnLogin: Button, progressBar: ProgressBar) {
+        dbRef.child("users").orderByChild("no_hp").equalTo(normalizePhone(phoneInput))
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var email: String? = null
+                        for (s in snapshot.children) { email = s.child("email").getValue(String::class.java); break }
+                        if (email != null) signInWithEmail(email, password, btnLogin, progressBar)
+                        else { setLoadingState(false, btnLogin, progressBar); Toast.makeText(this@LoginActivity, "Email tidak ditemukan.", Toast.LENGTH_SHORT).show() }
+                    } else { setLoadingState(false, btnLogin, progressBar); Toast.makeText(this@LoginActivity, "Nomor tidak terdaftar.", Toast.LENGTH_SHORT).show() }
+                }
+                override fun onCancelled(error: DatabaseError) { setLoadingState(false, btnLogin, progressBar) }
+            })
     }
 
     private fun normalizePhone(phone: String): String {
