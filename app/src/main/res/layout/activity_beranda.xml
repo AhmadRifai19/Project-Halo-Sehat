@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FC">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        android:clipToPadding="false"
+        android:paddingBottom="76dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="930dp"
+            android:background="#F5F7FC">
+
+            <!-- ================= HEADER ================= -->
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="176dp"
+                android:background="#2879C7" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="56dp"
+                android:text="Selamat datang"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="76dp"
+                android:text="Halo, Alfi Mariani"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="224dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="105dp"
+                android:text="Bagaimana kesehatan Anda hari ini?"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp" />
+
+            <!-- Foto Profil -->
+            <ImageView
+                android:layout_width="63dp"
+                android:layout_height="63dp"
+                android:layout_gravity="top|end"
+                android:layout_marginEnd="18dp"
+                android:layout_marginTop="59dp"
+                android:src="@drawable/profile_ring"
+                android:contentDescription="Foto profil" />
+
+            <!-- ================= BANNER AI HEALTH ================= -->
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="Foto profil"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_avatar" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="189dp"
+                android:src="@drawable/ai_health_banner"
+                android:scaleType="fitXY"
+                android:contentDescription="AI Health Banner" />
+
+            <!-- ================= LAYANAN CEPAT ================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="383dp"
+                android:text="Layanan cepat"
+                android:textColor="#19324D"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Kartu Buat Janji -->
+            <LinearLayout
+                android:layout_width="166dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="414dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_service_card">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_buat_janji"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Buat Janji" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buat Janji"
+                    android:textColor="#19324D"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar Konsultasi"
+                    android:textColor="#8291A5"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
+
+            <!-- Kartu Cek Antrean -->
+            <LinearLayout
+                android:layout_width="166dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="203dp"
+                android:layout_marginTop="414dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_service_card">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_cek_antrean"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Cek Antrean" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cek Antrean"
+                    android:textColor="#19324D"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lihat status Antrean"
+                    android:textColor="#8291A5"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
+
+            <!-- Kartu Gawat Darurat -->
+            <LinearLayout
+                android:layout_width="166dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="512dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_service_card">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_emergency"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Gawat Darurat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Layanan Gawat Darurat"
+                    android:textColor="#19324D"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pasien di prioritas"
+                    android:textColor="#8291A5"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
+
+            <!-- Kartu Rekam Medis -->
+            <LinearLayout
+                android:layout_width="166dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="203dp"
+                android:layout_marginTop="512dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_service_card">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_doctor_logo"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Rekam Medis" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rekam Medis"
+                    android:textColor="#19324D"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Riwayat kesehatan"
+                    android:textColor="#8291A5"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
+
+            <!-- ================= JANJI TEMU MENDATANG ================= -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="620dp"
+                android:text="Janji temu mendatang"
+                android:textColor="#19324D"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Kotak Janji Temu -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="650dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_service_card">
+
+                <!-- Ikon Kalender -->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_calender"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Kalender" />
+
+                <!-- Belum Ada Janji -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Belum ada janji temu"
+                    android:textColor="#19324D"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <!-- Keterangan -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Buat janji dengan dokter sesuai kebutuhan Anda."
+                    android:textColor="#8291A5"
+                    android:textSize="8sp" />
+
+                <!-- Tombol Cari Dokter -->
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="6dp"
+                    android:text="Cari Dokter"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2780D1"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="0dp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</FrameLayout>
