@@ -21,12 +21,10 @@ class AiKonsulActivity : AppCompatActivity() {
             val isiPesan = pesan.text.toString().trim()
 
             if (isiPesan.isNotEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Pesan berhasil dimasukkan",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                val intent = Intent(this, AiConversationActivity::class.java)
+                intent.putExtra("INITIAL_MESSAGE", isiPesan)
+                startActivity(intent)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 pesan.text.clear()
             } else {
                 Toast.makeText(

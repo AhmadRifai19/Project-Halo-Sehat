@@ -1,6 +1,8 @@
 package com.example.appsdokter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -25,7 +28,9 @@ class SplashActivity : AppCompatActivity() {
         )
 
         // Memaksa konten menutupi area sistem (status bar & nav bar)
-        window.setDecorFitsSystemWindows(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        }
         
         setContentView(R.layout.activity_splash)
 
@@ -71,8 +76,8 @@ class SplashActivity : AppCompatActivity() {
             val user = auth.currentUser
 
             if (user != null && user.isEmailVerified) {
-                // Sesi valid, langsung ke Main
-                startActivity(Intent(this, MainActivity::class.java))
+                // Sesi valid, langsung ke Beranda
+                startActivity(Intent(this, BerandaActivity::class.java))
             } else {
                 // Harus login
                 startActivity(Intent(this, LoginActivity::class.java))
