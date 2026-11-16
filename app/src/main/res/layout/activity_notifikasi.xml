@@ -436,6 +436,7 @@
             android:weightSum="4">
 
             <TextView
+                android:id="@+id/navBeranda"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -445,6 +446,7 @@
                 android:textSize="11sp" />
 
             <TextView
+                android:id="@+id/navAiKonsul"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -454,15 +456,18 @@
                 android:textSize="11sp" />
 
             <TextView
+                android:id="@+id/navNotifikasi"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="♧\nNotifikasi"
-                android:textColor="#63758A"
+                android:textColor="#2879C7"
+                android:textStyle="bold"
                 android:textSize="11sp" />
 
             <TextView
+                android:id="@+id/navProfile"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -478,5 +483,4 @@
             android:layout_gravity="center"
             android:background="@drawable/bg_notif_home_indicator" />
     </LinearLayout>
-
 </LinearLayout>
