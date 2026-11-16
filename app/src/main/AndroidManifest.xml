@@ -67,6 +67,11 @@
             android:exported="false" />
 
         <activity
+            android:name=".AiConversationActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".NotifikasiActivity"
             android:exported="true" />
 

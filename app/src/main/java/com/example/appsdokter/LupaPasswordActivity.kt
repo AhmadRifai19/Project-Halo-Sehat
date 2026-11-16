@@ -25,7 +25,7 @@ class LupaPasswordActivity : AppCompatActivity() {
         val btnKembali = findViewById<ImageView>(R.id.btnKembali)
         val tvKembaliLogin = findViewById<TextView>(R.id.tvKembaliLogin)
 
-        btnKirimLink.text = getString(R.string.btn_kirim_link_reset)
+        btnKirimLink.text = "Kirim Link Reset"
 
         btnKirimLink.setOnClickListener {
             val email = etEmail.text.toString().trim()

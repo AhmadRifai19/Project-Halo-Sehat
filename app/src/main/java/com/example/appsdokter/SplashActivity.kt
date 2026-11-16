@@ -1,6 +1,8 @@
 package com.example.appsdokter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,9 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -24,7 +28,9 @@ class SplashActivity : AppCompatActivity() {
         )
 
         // Memaksa konten menutupi area sistem (status bar & nav bar)
-        window.setDecorFitsSystemWindows(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        }
         
         setContentView(R.layout.activity_splash)
 
@@ -64,17 +70,20 @@ class SplashActivity : AppCompatActivity() {
                 .start()
         }
 
-        // Delay 2.5 detik lalu pindah ke LoginActivity
+        // Delay 2.5 detik lalu cek sesi user
         Handler(Looper.getMainLooper()).postDelayed({
-            try {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                // Memberikan transisi fade yang halus saat berpindah halaman
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                finish()
-            } catch (e: Exception) {
-                e.printStackTrace()
+            val auth = FirebaseAuth.getInstance()
+            val user = auth.currentUser
+
+            if (user != null && user.isEmailVerified) {
+                // Sesi valid, langsung ke Beranda
+                startActivity(Intent(this, BerandaActivity::class.java))
+            } else {
+                // Harus login
+                startActivity(Intent(this, LoginActivity::class.java))
             }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
         }, 2500)
     }
 }
