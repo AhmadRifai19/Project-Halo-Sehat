@@ -59,6 +59,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".BerandaActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AiKonsulActivity"
             android:exported="false" />
 
