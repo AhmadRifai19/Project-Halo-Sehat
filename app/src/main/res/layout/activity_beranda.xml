@@ -75,15 +75,14 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile_avatar" />
 
-            <ImageView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerBanner"
                 android:layout_width="match_parent"
                 android:layout_height="185dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="189dp"
-                android:src="@drawable/ai_health_banner"
-                android:scaleType="fitXY"
-                android:contentDescription="AI Health Banner" />
+                android:orientation="horizontal" />
 
             <!-- ================= LAYANAN CEPAT ================= -->
 
