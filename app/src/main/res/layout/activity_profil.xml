@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FC">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:paddingBottom="18dp"
+                android:background="@drawable/bg_profil_header">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profil"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kelola akun dan preferensi Anda."
+                    android:textColor="#DFEDFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- RINGKASAN PROFIL -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="22dp"
+                android:paddingBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/imgFotoProfil"
+                    android:layout_width="92dp"
+                    android:layout_height="92dp"
+                    android:src="@drawable/ic_profile_placeholder"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_profile_circle"
+                    android:contentDescription="Foto profil" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Kamera  Ubah foto profil"
+                    android:textColor="#2879C7"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Alfi Mariani"
+                    android:textColor="#182D44"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnEditProfil"
+                    android:layout_width="180dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Edit Profil"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/bg_profil_button" />
+            </LinearLayout>
+
+            <!-- AKUN SAYA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginEnd="9dp"
+                android:orientation="vertical"
+                android:padding="13dp"
+                android:background="@drawable/bg_profil_card">
+
+                <TextView
+                    style="@style/ProfilSectionTitle"
+                    android:text="AKUN SAYA" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemInformasiPribadi" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemIdentitas" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemKontak" />
+            </LinearLayout>
+
+            <!-- INFORMASI KESEHATAN -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:padding="13dp"
+                android:background="@drawable/bg_profil_card">
+
+                <TextView
+                    style="@style/ProfilSectionTitle"
+                    android:text="INFORMASI KESEHATAN" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemProfilKesehatan" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemRiwayatKonsultasi" />
+            </LinearLayout>
+
+            <!-- PENGATURAN -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:padding="13dp"
+                android:background="@drawable/bg_profil_card">
+
+                <TextView
+                    style="@style/ProfilSectionTitle"
+                    android:text="PENGATURAN" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemKeamanan" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemNotifikasi" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemPrivasi" />
+
+                <include layout="@layout/item_profil"
+                    android:id="@+id/itemBantuan" />
+            </LinearLayout>
+
+            <!-- KELUAR AKUN -->
+            <TextView
+                android:id="@+id/btnKeluar"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="Keluar dari Akun"
+                android:textColor="#B91C1C"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:background="@drawable/bg_logout" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Perubahan nama tampilan tidak mengubah data identitas Anda."
+                android:textColor="#63758A"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- NAVIGASI BAWAH -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="#F0F1FD">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="⌂\nBeranda"
+            android:textSize="11sp"
+            android:textColor="#63758A" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="▣\nAI Konsul"
+            android:textSize="11sp"
+            android:textColor="#63758A" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="♧\nNotifikasi"
+            android:textSize="11sp"
+            android:textColor="#63758A" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="♙\nProfil"
+            android:textSize="11sp"
+            android:textColor="#2879C7" />
+    </LinearLayout>
+
+</LinearLayout>

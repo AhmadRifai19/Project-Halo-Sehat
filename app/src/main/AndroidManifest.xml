@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppsDokter">
 
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -77,6 +78,14 @@
 
         <activity
             android:name=".NotifikasiSemuaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfilActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DetailProfilActivity"
             android:exported="false" />
 
 
