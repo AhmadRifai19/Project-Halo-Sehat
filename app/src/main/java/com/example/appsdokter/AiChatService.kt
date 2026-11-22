@@ -106,6 +106,33 @@ class AiChatService(private val context: Context, private val geminiKeys: List<S
             cleanReply = cleanReply.replace(summaryPattern.toRegex(), "").trim()
         }
 
-        return Triple(cleanReply.trim(), newNote, newSummary)
+        return Triple(formatAiResponse(cleanReply.trim()), newNote, newSummary)
+    }
+
+    /**
+     * Formats the AI response to look clean in the chat bubble:
+     * - Removes Markdown formatting characters (**, #, *, -, etc.)
+     * - Collapses multiple blank lines into a single one
+     * - Collapses multiple spaces on the same line
+     * - Ensures paragraphs are separated by single newlines
+     */
+    private fun formatAiResponse(raw: String): String {
+        var text = raw
+            // Hapus karakter Markdown umum
+            .replace("**", " ")
+            .replace("*", " ")
+            .replace("#", " ")
+            .replace("- ", " ")
+            .trim()
+        
+        return text
+            .split("\n")
+            .map { line ->
+                line.replace(Regex("\\s+"), " ").trim()
+            }
+            .filter { it.isNotEmpty() }
+            .joinToString("\n")
+            .let { it.trim() }
+            .ifEmpty { raw.trim() }
     }
 }

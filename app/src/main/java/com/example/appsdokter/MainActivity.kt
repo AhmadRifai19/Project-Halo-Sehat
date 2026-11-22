@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         btnAiKonsul.setOnClickListener {
             val intent = Intent(this, AiKonsulActivity::class.java)
             startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            applyTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         btnLogout.setOnClickListener {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            applyTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
     }

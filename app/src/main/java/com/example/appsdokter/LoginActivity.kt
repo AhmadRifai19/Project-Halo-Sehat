@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
@@ -15,25 +14,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
+import androidx.lifecycle.lifecycleScope
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.firebase.FirebaseApp
+import kotlinx.coroutines.launch
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class LoginActivity : AppCompatActivity() {
 
     private var isPasswordVisible = false
     private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var firestore: FirebaseFirestore
+    private val credentialManager = CredentialManager.create(this)
+    private val WEB_CLIENT_ID = getString(R.string.default_web_client_id)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +42,7 @@ class LoginActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
         auth = FirebaseAuth.getInstance()
-        dbRef = FirebaseDatabase.getInstance().reference
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        firestore = FirebaseFirestore.getInstance()
 
         val etEmailOrPhone = findViewById<EditText>(R.id.et_email)
         val etPassword = findViewById<EditText>(R.id.et_password)
@@ -74,12 +69,12 @@ class LoginActivity : AppCompatActivity() {
 
         tvForgotPassword.setOnClickListener {
             startActivity(Intent(this, LupaPasswordActivity::class.java))
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            applyTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            applyTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         btnLogin.setOnClickListener {
@@ -108,23 +103,34 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val googleSignInLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                Toast.makeText(this, "Google Sign-In Gagal: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     private fun signInGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setServerClientId(WEB_CLIENT_ID)
+            .setFilterByAuthorizedAccounts(true)
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        try {
+            lifecycleScope.launch {
+                val response = credentialManager.getCredential(this@LoginActivity, request)
+                val credential = response.credential
+                if (credential is CustomCredential) {
+                    val idToken = com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+                        .createFrom(credential.data)
+                        .idToken
+                    firebaseAuthWithGoogle(idToken)
+                } else {
+                    Toast.makeText(this@LoginActivity, "Akun Google tidak ditemukan.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: GetCredentialCancellationException) {
+            // Handle cancellation
+        } catch (e: GetCredentialException) {
+            Toast.makeText(this, "Google Sign-In Gagal: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -134,15 +140,17 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     val uid = user?.uid ?: return@addOnCompleteListener
-                    
+
                     val userData = mapOf(
                         "nama" to (user.displayName ?: ""),
                         "email" to (user.email ?: ""),
                         "status_aktif" to true
                     )
-                    
-                    dbRef.child("users").child(uid).updateChildren(userData)
-                    
+
+                    // Simpan/Update profil user ke Firestore (merge agar field lain tidak hilang)
+                    firestore.collection("users").document(uid)
+                        .set(userData, SetOptions.merge())
+
                     Toast.makeText(this, "Selamat datang, ${user.displayName}", Toast.LENGTH_SHORT).show()
                     navigateToMain()
                 } else {
@@ -160,11 +168,12 @@ class LoginActivity : AppCompatActivity() {
                         user.reload().addOnCompleteListener { _ ->
                             val isVerified = user.isEmailVerified
                             if (isVerified) {
-                                dbRef.child("users").child(user.uid).child("status_aktif").setValue(true)
-                                    .addOnSuccessListener { fetchUserDataFromRtdb(user.uid, true, btnLogin, progressBar) }
-                                    .addOnFailureListener { fetchUserDataFromRtdb(user.uid, true, btnLogin, progressBar) }
+                                firestore.collection("users").document(user.uid)
+                                    .update("status_aktif", true)
+                                    .addOnSuccessListener { fetchUserDataFromFirestore(user.uid, true, btnLogin, progressBar) }
+                                    .addOnFailureListener { fetchUserDataFromFirestore(user.uid, true, btnLogin, progressBar) }
                             } else {
-                                fetchUserDataFromRtdb(user.uid, false, btnLogin, progressBar)
+                                fetchUserDataFromFirestore(user.uid, false, btnLogin, progressBar)
                             }
                         }
                     }
@@ -175,36 +184,55 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun fetchUserDataFromRtdb(uid: String, isVerifiedInAuth: Boolean, btnLogin: Button, progressBar: ProgressBar) {
-        dbRef.child("users").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+    private fun fetchUserDataFromFirestore(
+        uid: String,
+        isVerifiedInAuth: Boolean,
+        btnLogin: Button,
+        progressBar: ProgressBar
+    ) {
+        firestore.collection("users").document(uid)
+            .get()
+            .addOnSuccessListener { document ->
                 setLoadingState(false, btnLogin, progressBar)
-                val isActiveInDb = snapshot.child("status_aktif").getValue(Boolean::class.java) ?: false
+                val isActiveInDb = document.getBoolean("status_aktif") ?: false
                 if (isVerifiedInAuth || isActiveInDb) {
-                    if (isVerifiedInAuth && !isActiveInDb) dbRef.child("users").child(uid).child("status_aktif").setValue(true)
+                    if (isVerifiedInAuth && !isActiveInDb) {
+                        firestore.collection("users").document(uid).update("status_aktif", true)
+                    }
                     navigateToMain()
                 } else {
                     Toast.makeText(this@LoginActivity, "Akun belum aktif. Cek email Anda.", Toast.LENGTH_LONG).show()
                     auth.signOut()
                 }
             }
-            override fun onCancelled(error: DatabaseError) { setLoadingState(false, btnLogin, progressBar); auth.signOut() }
-        })
+            .addOnFailureListener {
+                setLoadingState(false, btnLogin, progressBar)
+                auth.signOut()
+            }
     }
 
     private fun loginWithPhoneNumber(phoneInput: String, password: String, btnLogin: Button, progressBar: ProgressBar) {
-        dbRef.child("users").orderByChild("no_hp").equalTo(normalizePhone(phoneInput))
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        var email: String? = null
-                        for (s in snapshot.children) { email = s.child("email").getValue(String::class.java); break }
-                        if (email != null) signInWithEmail(email, password, btnLogin, progressBar)
-                        else { setLoadingState(false, btnLogin, progressBar); Toast.makeText(this@LoginActivity, "Email tidak ditemukan.", Toast.LENGTH_SHORT).show() }
-                    } else { setLoadingState(false, btnLogin, progressBar); Toast.makeText(this@LoginActivity, "Nomor tidak terdaftar.", Toast.LENGTH_SHORT).show() }
+        firestore.collection("users")
+            .whereEqualTo("no_hp", normalizePhone(phoneInput))
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if (!snapshot.isEmpty) {
+                    val email = snapshot.documents.firstOrNull()?.getString("email")
+                    if (email != null) {
+                        signInWithEmail(email, password, btnLogin, progressBar)
+                    } else {
+                        setLoadingState(false, btnLogin, progressBar)
+                        Toast.makeText(this@LoginActivity, "Email tidak ditemukan.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    setLoadingState(false, btnLogin, progressBar)
+                    Toast.makeText(this@LoginActivity, "Nomor tidak terdaftar.", Toast.LENGTH_SHORT).show()
                 }
-                override fun onCancelled(error: DatabaseError) { setLoadingState(false, btnLogin, progressBar) }
-            })
+            }
+            .addOnFailureListener {
+                setLoadingState(false, btnLogin, progressBar)
+                Toast.makeText(this@LoginActivity, "Gagal mencari nomor: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun normalizePhone(phone: String): String {
@@ -226,7 +254,7 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, BerandaActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        applyTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
     }
 }

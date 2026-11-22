@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 import java.util.Calendar
 
 class RegisterDataPribadiActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
-    private val dbRef = FirebaseDatabase.getInstance().getReference("users")
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +95,6 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
             datePicker.show()
         }
 
-
         // 4. Mengatur tombol Daftar
         btnDaftar.setOnClickListener {
 
@@ -173,25 +172,27 @@ class RegisterDataPribadiActivity : AppCompatActivity() {
                             "status_aktif" to false
                         )
 
-                        userId?.let {
-                            dbRef.child(it).setValue(userMap).addOnCompleteListener { dbTask ->
-                                if (dbTask.isSuccessful) {
-                                    // KIRIM EMAIL VERIFIKASI (AKTIVASI)
-                                    auth.currentUser?.sendEmailVerification()
-                                        ?.addOnCompleteListener { verifyTask ->
-                                            if (verifyTask.isSuccessful) {
-                                                val intent = Intent(this, RegisterSuccessActivity::class.java)
-                                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                startActivity(intent)
-                                                finish()
-                                            } else {
-                                                Toast.makeText(this, "Gagal mengirim email aktivasi.", Toast.LENGTH_SHORT).show()
+                        userId?.let { uid ->
+                            firestore.collection("users").document(uid)
+                                .set(userMap)
+                                .addOnCompleteListener { dbTask ->
+                                    if (dbTask.isSuccessful) {
+                                        // KIRIM EMAIL VERIFIKASI (AKTIVASI)
+                                        auth.currentUser?.sendEmailVerification()
+                                            ?.addOnCompleteListener { verifyTask ->
+                                                if (verifyTask.isSuccessful) {
+                                                    val intent = Intent(this, RegisterSuccessActivity::class.java)
+                                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                    startActivity(intent)
+                                                    finish()
+                                                } else {
+                                                    Toast.makeText(this, "Gagal mengirim email aktivasi.", Toast.LENGTH_SHORT).show()
+                                                }
                                             }
-                                        }
-                                } else {
-                                    Toast.makeText(this, "Gagal simpan database: ${dbTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(this, "Gagal simpan database: ${dbTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
                         }
                     } else {
                         Toast.makeText(this, "Gagal Daftar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
