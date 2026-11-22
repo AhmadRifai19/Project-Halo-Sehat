@@ -56,8 +56,13 @@ dependencies {
     // Library Firebase & Auth
     implementation(platform("com.google.firebase:firebase-bom:35.1.0"))
     implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.android.gms:play-services-auth:21.3.0") // Library Google Sign-In
+
+    // Library Google Credential Manager (Sign in with Google Modern)
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
     
     // Library Gemini AI
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")

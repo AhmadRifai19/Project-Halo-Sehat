@@ -2,8 +2,10 @@ package com.example.appsdokter
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,10 +23,7 @@ class AiKonsulActivity : AppCompatActivity() {
             val isiPesan = pesan.text.toString().trim()
 
             if (isiPesan.isNotEmpty()) {
-                val intent = Intent(this, AiConversationActivity::class.java)
-                intent.putExtra("INITIAL_MESSAGE", isiPesan)
-                startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                bukaChat(isiPesan)
                 pesan.text.clear()
             } else {
                 Toast.makeText(
@@ -33,6 +32,23 @@ class AiKonsulActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+
+        // --- QUICK CHAT: klik topik langsung buka percakapan dengan AI ---
+        findViewById<LinearLayout>(R.id.topic_gejala).setOnClickListener {
+            bukaChat("Saya ingin mengenali gejala yang saya alami. Bantu saya memahami kemungkinan penyebabnya dan saran awalnya.")
+        }
+
+        findViewById<LinearLayout>(R.id.topic_obat).setOnClickListener {
+            bukaChat("Saya ingin informasi seputar obat. Bantu jelaskan cara pakai, dosis, dan efek samping yang perlu diperhatikan.")
+        }
+
+        findViewById<LinearLayout>(R.id.topic_tips).setOnClickListener {
+            bukaChat("Berikan tips menjaga kesehatan sehari-hari yang praktis dan mudah dilakukan.")
+        }
+
+        findViewById<LinearLayout>(R.id.topic_dokter).setOnClickListener {
+            bukaChat("Saya ingin persiapan konsultasi dokter. Bantu saya membuat daftar hal yang perlu disiapkan dan ditanyakan.")
         }
 
         // --- TAMBAHAN NAVIGASI BAWAH ---
@@ -51,5 +67,12 @@ class AiKonsulActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.navProfile).setOnClickListener {
             Toast.makeText(this, "Halaman Profile belum tersedia", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun bukaChat(pesanAwal: String) {
+        val intent = Intent(this, AiConversationActivity::class.java)
+        intent.putExtra("INITIAL_MESSAGE", pesanAwal)
+        startActivity(intent)
+        applyTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

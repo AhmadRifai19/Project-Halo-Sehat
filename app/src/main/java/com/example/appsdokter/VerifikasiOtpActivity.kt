@@ -1,6 +1,5 @@
 package com.example.appsdokter
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -12,7 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.PhoneAuthProvider
 
@@ -24,10 +23,12 @@ class VerifikasiOtpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verifikasi_otp)
 
-        onBackPressedDispatcher.addCallback(this) {
-            finish()
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                applyTransition(R.anim.fade_in, R.anim.fade_out)
+            }
+        })
 
         // Menerima data dari LupaPasswordActivity
         verificationId = intent.getStringExtra("verificationId")
@@ -68,7 +69,7 @@ class VerifikasiOtpActivity : AppCompatActivity() {
 
         if (verificationId != null) {
             val credential = PhoneAuthProvider.getCredential(verificationId!!, completeOtp)
-            
+
             // Login/Verifikasi user
             val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
             auth.signInWithCredential(credential)
@@ -77,7 +78,7 @@ class VerifikasiOtpActivity : AppCompatActivity() {
                         // OTP Valid
                         val intent = Intent(this, NewPasswordActivity::class.java)
                         startActivity(intent)
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                        applyTransition(R.anim.fade_in, R.anim.fade_out)
                         finish()
                     } else {
                         Toast.makeText(this, "OTP Salah atau Kadaluwarsa", Toast.LENGTH_SHORT).show()
@@ -122,6 +123,6 @@ class VerifikasiOtpActivity : AppCompatActivity() {
 
     private fun finishWithAnimation() {
         finish()
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        applyTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

@@ -3,6 +3,7 @@ package com.example.appsdokter
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 class VerifikasiBerhasilActivity : AppCompatActivity() {
@@ -13,17 +14,19 @@ class VerifikasiBerhasilActivity : AppCompatActivity() {
         val btnKembaliLogin = findViewById<Button>(R.id.btnKembaliLogin)
 
         btnKembaliLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            // Membersihkan backstack agar user tidak bisa kembali ke halaman sukses
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intent = Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
             startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            applyTransition(R.anim.slide_in_left, R.anim.slide_out_right)
             finish()
         }
-    }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                applyExitTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+        })
     }
 }

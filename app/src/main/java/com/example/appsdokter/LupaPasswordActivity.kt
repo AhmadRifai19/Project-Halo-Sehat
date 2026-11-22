@@ -34,18 +34,18 @@ class LupaPasswordActivity : AppCompatActivity() {
 
         btnKembali?.setOnClickListener {
             finish()
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            applyExitTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         tvKembaliLogin?.setOnClickListener {
             finish()
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            applyExitTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finish()
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                applyExitTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         })
     }
