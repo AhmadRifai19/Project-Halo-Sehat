@@ -1,4 +1,3 @@
-
 package com.example.appsdokter
 
 import android.os.Bundle
@@ -12,7 +11,6 @@ class ProfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profil)
-
 
         aturMenu(
             R.id.itemInformasiPribadi,
@@ -74,6 +72,8 @@ class ProfilActivity : AppCompatActivity() {
             .setOnClickListener {
                 tampilPesan("Anda memilih keluar dari akun")
             }
+
+        setupBottomNav(R.id.navProfile)
     }
 
     private fun tampilPesan(pesan: String) {
@@ -83,8 +83,6 @@ class ProfilActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT
         ).show()
     }
-
-
 
     private fun aturMenu(
         viewId: Int,
@@ -112,5 +110,4 @@ class ProfilActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 }

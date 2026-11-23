@@ -1,41 +1,36 @@
 package com.example.appsdokter
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BerandaActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_beranda)
+        setContentView(R.layout.activity_home)
 
-        val viewPager = findViewById<ViewPager2>(
-            R.id.viewPagerBanner
-        )
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        val bannerList = listOf(
-            R.drawable.ai_health_banner,
-            R.drawable.ai_health_banner1,
-            R.drawable.ai_health_banner2
-        )
-
-        val bannerAdapter = BannerAdapter(bannerList)
-
-        viewPager.adapter = bannerAdapter
-
-        findViewById<TextView>(R.id.navAiKonsul).setOnClickListener {
-            startActivity(Intent(this, AiKonsulActivity::class.java))
+        if (savedInstanceState == null) {
+            gantiFragment(BerandaFragment())
         }
 
-        findViewById<TextView>(R.id.navNotifikasi).setOnClickListener {
-            startActivity(Intent(this, NotifikasiActivity::class.java))
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_beranda -> gantiFragment(BerandaFragment())
+                R.id.menu_ai_konsul -> gantiFragment(AiKonsulFragment())
+                R.id.menu_notifikasi -> gantiFragment(NotifikasiFragment())
+                R.id.menu_profil -> gantiFragment(ProfilFragment())
+            }
+            true
         }
+    }
 
-        findViewById<TextView>(R.id.navProfile).setOnClickListener {
-            Toast.makeText(this, "Halaman Profile belum tersedia", Toast.LENGTH_SHORT).show()
-        }
+    private fun gantiFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 }
