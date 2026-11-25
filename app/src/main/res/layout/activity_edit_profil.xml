@@ -202,6 +202,7 @@
 
                     <!-- INFORMASI PRIBADI -->
                     <LinearLayout
+                        android:id="@+id/itemInformasiPribadi"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:layout_marginTop="18dp"
@@ -311,6 +312,7 @@
 
                     <!-- KONTAK AKUN -->
                     <LinearLayout
+                        android:id="@+id/itemKontakAkun"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:layout_marginTop="18dp"

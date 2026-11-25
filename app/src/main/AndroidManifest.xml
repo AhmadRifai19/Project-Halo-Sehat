@@ -100,6 +100,10 @@
             android:name=".IdentitasAlamatActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".KontakAkunActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
