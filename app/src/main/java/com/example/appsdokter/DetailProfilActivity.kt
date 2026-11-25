@@ -1,8 +1,9 @@
-
 package com.example.appsdokter
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
 class DetailProfilActivity : AppCompatActivity() {
@@ -19,5 +20,16 @@ class DetailProfilActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tvDetailJudul).text = judul
         findViewById<TextView>(R.id.tvDetailDeskripsi).text = deskripsi
+
+        // Navigasi ke halaman Edit Profil
+        val btnEditProfil = findViewById<Button>(R.id.btnEditProfil)
+
+        btnEditProfil.setOnClickListener {
+            val pindahHalaman = Intent(
+                this,
+                EditProfilActivity::class.java
+            )
+            startActivity(pindahHalaman)
+        }
     }
 }

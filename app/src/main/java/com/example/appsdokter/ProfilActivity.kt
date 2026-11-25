@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 
 class ProfilActivity : AppCompatActivity() {
 
@@ -61,11 +62,17 @@ class ProfilActivity : AppCompatActivity() {
             "Membuka Pengaturan Notifikasi"
         )
 
+
         // Tombol Edit Profil
         findViewById<Button>(R.id.btnEditProfil)
             .setOnClickListener {
-                tampilPesan("Membuka Edit Profil")
+                val intent = Intent(
+                    this,
+                    EditProfilActivity::class.java
+                )
+                startActivity(intent)
             }
+
 
         // Tombol Keluar
         findViewById<TextView>(R.id.btnKeluar)

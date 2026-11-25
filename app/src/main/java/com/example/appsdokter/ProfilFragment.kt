@@ -21,7 +21,11 @@ class ProfilFragment : Fragment(R.layout.activity_profil) {
         aturMenu(view, R.id.itemNotifikasi, "Pengaturan Notifikasi", "Atur pemberitahuan aplikasi")
 
         view.findViewById<Button>(R.id.btnEditProfil).setOnClickListener {
-            Toast.makeText(requireContext(), "Membuka Edit Profil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(
+                requireContext(),
+                EditProfilActivity::class.java
+            )
+            startActivity(intent)
         }
 
         view.findViewById<TextView>(R.id.btnKeluar).setOnClickListener {
@@ -41,4 +45,6 @@ class ProfilFragment : Fragment(R.layout.activity_profil) {
             startActivity(intent)
         }
     }
+
+
 }

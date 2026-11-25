@@ -25,4 +25,15 @@
         android:textSize="15sp"
         android:textColor="#63758A"/>
 
+    <Button
+        android:id="@+id/btnEditProfil"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="24dp"
+        android:text="Edit Profil"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:backgroundTint="#2879C7"/>
+
+
 </LinearLayout>
