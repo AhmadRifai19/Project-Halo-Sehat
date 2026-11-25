@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pilihan_provinsi">
+        <item>Pilih provinsi</item>
+    </string-array>
+
+    <string-array name="pilihan_kota">
+        <item>Pilih kota / kabupaten</item>
+    </string-array>
+
+    <string-array name="pilihan_kecamatan">
+        <item>Pilih kecamatan</item>
+    </string-array>
+
+    <string-array name="pilihan_kelurahan">
+        <item>Pilih kelurahan / desa</item>
+    </string-array>
+
+</resources>

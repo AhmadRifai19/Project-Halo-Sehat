@@ -256,6 +256,7 @@
 
                     <!-- IDENTITAS DAN ALAMAT -->
                     <LinearLayout
+                        android:id="@+id/itemIdentitasAlamat"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:layout_marginTop="18dp"

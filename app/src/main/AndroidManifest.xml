@@ -92,6 +92,14 @@
             android:name=".EditProfilActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".InformasiPribadiActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".IdentitasAlamatActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
